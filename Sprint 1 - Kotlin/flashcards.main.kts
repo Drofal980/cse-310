@@ -15,6 +15,41 @@ fun createFlashcard(): Flashcard {
     return newFlashcard
 }
 
+fun saveCards(flashcards: List<Flashcard>) {
+    println("Saving ${flashcards.size} flashcards...")
+    val filename = "flashcards.txt"
+    val file = java.io.File(filename)
+    file.printWriter().use { out ->
+        flashcards.forEach { card ->
+            out.println("${card.question}|${card.answer}")
+        }
+    }   
+    println("All flashcards saved.")
+}
+
+fun loadCards(): MutableList<Flashcard> {
+    val flashcards: MutableList<Flashcard> = mutableListOf()
+    val filename = "flashcards.txt"
+    val file = java.io.File(filename)
+
+    if (!file.exists()) {
+        println("No saved flashcards found.")
+        return flashcards
+    }
+
+    file.forEachLine { line ->
+        val parts = line.split("|")
+        if (parts.size == 2) {
+            val question = parts[0]
+            val answer = parts[1]
+            flashcards.add(Flashcard(question, answer))
+        }
+    }
+
+    println("Loaded ${flashcards.size} flashcards.")
+    return flashcards
+}
+
 fun menu(){
     var flashcards:  MutableList<Flashcard> = mutableListOf()
     var done: Boolean = false
@@ -23,7 +58,9 @@ fun menu(){
         println("Select an option: ")
         println("1. Create a new card")
         println("2. Start Quiz")
-        println("3. Quit")
+        println("3. Load Cards")
+        println("4. Save and Quit")
+        println("5. Quit")
         println("-----------------------")
         // take input from user
         val input = readln()
@@ -31,7 +68,9 @@ fun menu(){
         when (input) {
             "1" -> flashcards.add(createFlashcard())
             "2" -> quiz(flashcards)
-            "3" -> done = true
+            "3" -> flashcards = loadCards()
+            "4" -> saveCards(flashcards).also { done = true }
+            "5" -> done = true
             else -> println("Invalid input.")
         }
 
