@@ -58,8 +58,8 @@ fun menu(){
         println("Select an option: ")
         println("1. Create a new card")
         println("2. Start Quiz")
-        println("3. Load Cards")
-        println("4. Save and Quit")
+        println("3. Save and Quit")
+        println("4. Load Cards")
         println("5. Quit")
         println("-----------------------")
         // take input from user
@@ -68,8 +68,8 @@ fun menu(){
         when (input) {
             "1" -> flashcards.add(createFlashcard())
             "2" -> quiz(flashcards)
-            "3" -> flashcards = loadCards()
-            "4" -> saveCards(flashcards).also { done = true }
+            "3" -> saveCards(flashcards).also { done = true }
+            "4" -> flashcards = loadCards()
             "5" -> done = true
             else -> println("Invalid input.")
         }
