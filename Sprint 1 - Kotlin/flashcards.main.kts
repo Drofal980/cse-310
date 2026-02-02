@@ -29,7 +29,7 @@ fun saveCards(flashcards: List<Flashcard>) {
 
 fun loadCards(): MutableList<Flashcard> {
     val flashcards: MutableList<Flashcard> = mutableListOf()
-    val filename = "flashcards.txt"
+    val filename = "Sprint 1 - Kotlin\\flashcards.txt"
     val file = java.io.File(filename)
 
     if (!file.exists()) {
