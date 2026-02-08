@@ -29,12 +29,13 @@ The expected minimum amount of time each Sprint for each category is as follows:
 |----------|----------|:------:|--------------------------------------------|:-----------:|
 |1/28/2026 |10:15     |  MTG   |In Class Work Time                          |     60      |
 |1/30/2026 |10:23     |  IM    |Working in class                            |     52      |
-|2/2/2026  |10:15     |  TP    |Working in and a little after class         |     75      |
-|2/2/2026  |11:30     |  IM    |Restarting snake program                    |     40      |
-|2/2/2026  |16:00     |  IM    |Finish Snake Program                        |    163      |
-|2/3/2026  |17:15     |  TP    |Copied and edited presentation              |     40      |
+|2/2/2026  |10:15     |  TP    |Working in and after class                  |    175      |
+|2/2/2026  |11:30     |  IM    |Restarting snake program                    |    140      |
+|2/2/2026  |16:00     |  IM    |Finish Snake Program                        |    363      |
+|2/3/2026  |10:15     |  TP    |Copied and edited presentation              |     40      |
 |2/7/2026  |8:44      |  TP    |Finalise Final Planning                     |      6      |
-|2/7/2026  |8:55      |  IM    |Added final edits and completed README      |     30      |
+|2/7/2026  |8:55      |  IM    |Added final edits and completed README      |     60      |
+
 
 _Note: Add more rows as needed._
 
@@ -42,7 +43,7 @@ _Note: Add more rows as needed._
 
 |Categroy                       |Total Time (Hours:Minutes)|
 |-------------------------------|:------------------------:|
-|IM - Individual Module         |           4:45           |
-|TP - Team Project              |           2:01           |
+|IM - Individual Module         |          10:15           |
+|TP - Team Project              |           3:41           |
 |MTG - Class Meetings           |           1:00           |
-|**TOTAL**                      |         **7:46**         |
+|**TOTAL**                      |        **14:56**         |
