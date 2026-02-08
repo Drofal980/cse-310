@@ -7,8 +7,10 @@ A terminal-based multiplayer lightcycle game based on the TRON movies.
 Steps to build and/or run the software:
 
 1. Download Python 3.10 or higher from [python.org](https://www.python.org/downloads/).
-2. Save both the lightcycle_client and lightcycle_server files. If wanting to play with more people, have them download the lightcycle_client.
-3. The host computer should run
+2. Create a virtual environment of your Python instance.
+3. run `pip install requirements.txt` in your virtual environment.
+4. Save both the lightcycle_client and lightcycle_server files. If wanting to play with more people, have them download the lightcycle_client.
+5. The host computer should run:
 
 ```bash
    python3 PATH_TO_DIRECTORY/lightcycle_server.py
