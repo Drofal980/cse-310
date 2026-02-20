@@ -19,6 +19,14 @@ class TalkIdeasDB:
     # -----------------------------
     def now_utc(self):
         return datetime.now(timezone.utc)
+    
+    def ping(self) -> bool:
+        """Check if the database connection is alive."""
+        try:
+            self.client.admin.command('ping')
+            return True
+        except Exception: #pylint: disable=broad-except
+            return False
 
     # -----------------------------
     # Topic (collection) management

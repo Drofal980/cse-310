@@ -70,6 +70,9 @@ class DashboardPage(tk.Frame):
 
         tk.Button(self, text="Refresh", width=12,
                   command=self.refresh).pack(pady=10)
+        
+        # Initial load of topics
+        self.refresh()
 
     # -------------------------------------------------
     # Refresh topic list

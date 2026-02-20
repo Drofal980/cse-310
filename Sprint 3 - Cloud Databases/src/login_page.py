@@ -13,6 +13,9 @@ class LoginPage(tk.Frame):
     - Encrypted session persistence
     - MongoDB connection
     """
+    CONN_ERR_HEADER = "Connection Error"
+    CONN_ERR_MSG = "Failed to connect to MongoDB. Check your credentials and host."
+
     def __init__(self, parent, controller):
         super().__init__(parent)
         self.controller = controller
@@ -70,8 +73,15 @@ class LoginPage(tk.Frame):
 
             save_session(username, host)
 
-            messagebox.showinfo("Success", "Connected successfully!")
-            self.controller.show_frame("DashboardPage")
+            # Test connection by listing databases
+            if db.ping():
+                messagebox.showinfo("Success", "Connected successfully!")
+                self.controller.show_frame("DashboardPage")
+            else:
+                messagebox.showerror(self.CONN_ERR_HEADER, self.CONN_ERR_MSG)
+        
+        except ConnectionError:
+            messagebox.showerror(self.CONN_ERR_HEADER, self.CONN_ERR_MSG)
 
         except Exception as e:  #pylint: disable=broad-except
-            messagebox.showerror("Connection Error", str(e))
+            messagebox.showerror(self.CONN_ERR_HEADER, str(e))
