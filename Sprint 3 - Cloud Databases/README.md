@@ -1,28 +1,28 @@
-# Project Title (Update)
+# Church Talk Ideas
 
-Add a description of your project here.
+This app is to put all ideas and references for any future talk or sermon one might give about a certain topic.
 
 ## Instructions for Build and Use
 
 Steps to build and/or run the software:
 
-1. First step here
-2.
-3.
+1. Download Python 3.10 or higher from [python.org](https://www.python.org/downloads/).
+2. Create a virtual environment of your Python instance.
+3. run `pip install requirements.txt` in your virtual environment.
+4. Run the `src\app.py`
 
 Instructions for using the software:
 
-1. First step here
-2.
-3.
+1. First get an account login through the MongoDB Atlas server
+2. Enter the user login credentials, including the connection string.
+3. Once logged in, user the dashboard to add and edit your talk ideas!
 
 ## Development Environment
 
 To recreate the development environment, you need the following software and/or libraries with the specified versions:
 
-* First thing here
-*
-*
+* Python 3.10 or higher
+* Visual Studio Code
 
 ## Useful Websites to Learn More
 
@@ -37,6 +37,5 @@ I found these websites useful in developing this software:
 
 The following items I plan to fix, improve, and/or add to this project in the future:
 
-* [ ] First thing here
-* [ ]
-* [ ]
+* [ ] UI overhaul
+* [ ] Fix issue with selecting notes when editing or deleting
