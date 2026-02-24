@@ -27,16 +27,16 @@ The expected minimum amount of time each Sprint for each category is as follows:
 
 |Date      |Start Time|Category|Description                                 |Total Minutes|
 |----------|----------|:------:|--------------------------------------------|:-----------:|
-|1/28/2026 |10:15     |  MTG   |In Class Work Time                          |     60      |
-|1/30/2026 |10:15     |  MTG   |Working in class                            |     60      |
-|2/2/2026  |10:15     |  TP    |Working in and after class                  |     75      |
-|2/2/2026  |11:30     |  IM    |Restarting snake program                    |     40      |
-|2/2/2026  |16:00     |  IM    |Finish Snake Program                        |    363      |
-|2/3/2026  |10:15     |  TP    |Copied, edited, and prepped presentation    |     60      |
-|2/4/2026  |10:15     |  MTG   |Class Meeting                               |     60      |
-|2/6/2026  |10:15     |  MTG   |Class Meeting                               |     60      |
-|2/7/2026  |8:44      |  TP    |Finalise Final Planning                     |     30      |
-|2/7/2026  |8:55      |  IM    |Added final edits and completed README      |     60      |
+|2/9/2026  |10:15     |  MTG   |Class Planning Meeting                      |     30      |
+|2/9/2026  |10:45     |  TP    |Reevaluation of project structure           |     35      |
+|2/9/2026  |15:30     |  TP    |Merge Branches to Main                      |     90      |
+|2/11/2026 |10:15     |  MTG   |Team Work time in and after class           |     60      |
+|2/13/2026 |10:15     |  TP    |After Class work time                       |     38      |
+|2/13/2026 |10:15     |  MTG   |Individual Standup Meeting                  |     60      |
+|2/17/2026 |10:15     |  MTG   |In Class work time                          |     60      |
+|2/17/2026 |21:00     |  TP    |Call with Emily and working on VimDecoder   |    150      |
+|2/19/2026 |16:50     |  IM    |Setup mongodb and work on talk ideas app    |    497      |
+|2/20/2026 |10:15     |  MTG   |Individual Demo                             |     60      |
 
 _Note: Add more rows as needed._
 
