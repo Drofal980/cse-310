@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Automotive Mechanic Shops Map</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+  <!-- ArcGIS Maps SDK for JavaScript (CDN) -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.30/"></script>
+
+  <style>
+    html, body {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      font-family: Arial, sans-serif;
+    }
+    #app-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    header {
+      padding: 10px 16px;
+      background: #1f4e79;
+      color: white;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+    #viewDiv {
+      flex: 1;
+    }
+    #info {
+      position: absolute;
+      top: 70px;
+      left: 15px;
+      z-index: 10;
+      background: rgba(255,255,255,0.9);
+      padding: 8px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      max-width: 260px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+<div id="app-container">
+  <header>
+    <h1>Automotive Mechanic Shops (Live OSM Data)</h1>
+  </header>
+  <div id="viewDiv"></div>
+  <div id="info">
+    This map shows automotive mechanic shops (amenity=<b>car_repair</b>) loaded live from the
+    public Overpass / OpenStreetMap server. Click a marker to see details.
+  </div>
+</div>
+
+<script>
+  require([
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/layers/GraphicsLayer",
+    "esri/Graphic"
+  ], function (Map, MapView, GraphicsLayer, Graphic) {
+
+    const map = new Map({
+      basemap: "streets-navigation-vector" // roads-style basemap
+    });
+
+    const view = new MapView({
+      container: "viewDiv",
+      map: map,
+      center: [-111.7897, 43.8260], // Rexburg, ID
+      zoom: 12
+    });
+
+    // 3. GraphicsLayer to hold mechanic shop markers
+    const shopsLayer = new GraphicsLayer();
+    map.add(shopsLayer);
+
+    // 4. Popup template for each mechanic shop
+    const popupTemplate = {
+      title: "{name}",
+      content: function (feature) {
+        const attrs = feature.graphic.attributes;
+        let html = "<b>Type:</b> " + (attrs.shop_type || "Automotive repair") + "<br/>";
+        if (attrs.operator) {
+          html += "<b>Operator:</b> " + attrs.operator + "<br/>";
+        }
+        if (attrs.brand) {
+          html += "<b>Brand:</b> " + attrs.brand + "<br/>";
+        }
+        if (attrs.street || attrs.city || attrs.state || attrs.postcode) {
+          html += "<b>Address:</b><br/>";
+          html += (attrs.street || "") + "<br/>";
+          html += (attrs.city || "") + " " + (attrs.state || "") + " " + (attrs.postcode || "") + "<br/>";
+        }
+        if (attrs.phone) {
+          html += "<b>Phone:</b> " + attrs.phone + "<br/>";
+        }
+        if (attrs.website) {
+          html += '<b>Website:</b> <a href="' + attrs.website + '" target="_blank">' + attrs.website + "</a><br/>";
+        }
+        html += "<br/><i>Source: OpenStreetMap (via Overpass API)</i>";
+        return html;
+      }
+    };
+
+    // 5. Symbol for mechanic shop markers
+    const shopSymbol = {
+      type: "simple-marker",
+      style: "circle",
+      color: "#e74c3c",
+      size: "10px",
+      outline: {
+        color: "#ffffff",
+        width: 1
+      }
+    };
+
+    // 6. Fetch mechanic shops from Overpass (OpenStreetMap)
+    //    We query for amenity=car_repair in a large bounding box to ensure many results.
+    //    BBOX format: south,west,north,east
+    //    Here: roughly western US; adjust if you want a different region.
+    const overpassUrl = "https://overpass-api.de/api/interpreter";
+    const overpassQuery = `
+        [out:json][timeout:25];
+        // gather results
+        nwr["shop"="car_repair"](43.452420428224585,-112.0539379119873,43.50784949957228,-111.9653606414795);
+        // print results
+        out geom;
+    `;
+
+    function loadMechanicShops() {
+      fetch(overpassUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "data=" + encodeURIComponent(overpassQuery)
+      })
+      .then(response => response.json())
+      .then(data => {
+        const elements = data.elements || [];
+        console.log("Loaded mechanic shops:", elements.length);
+
+        const graphics = elements
+          .filter(el => (el.type === "node" && el.lat && el.lon) ||
+                        ((el.type === "way" || el.type === "relation") && el.center))
+          .map(el => {
+            const lat = el.lat || (el.center && el.center.lat);
+            const lon = el.lon || (el.center && el.center.lon);
+
+            const tags = el.tags || {};
+            const attributes = {
+              id: el.id,
+              name: tags.name || "Unnamed mechanic shop",
+              shop_type: "Automotive repair",
+              operator: tags.operator || null,
+              brand: tags.brand || null,
+              street: tags["addr:street"] || null,
+              city: tags["addr:city"] || null,
+              state: tags["addr:state"] || null,
+              postcode: tags["addr:postcode"] || null,
+              phone: tags.phone || null,
+              website: tags.website || null
+            };
+
+            return new Graphic({
+              geometry: {
+                type: "point",
+                longitude: lon,
+                latitude: lat
+              },
+              symbol: shopSymbol,
+              attributes: attributes,
+              popupTemplate: popupTemplate
+            });
+          });
+
+        // Ensure we have at least 20 markers (the query region is large, so usually many more)
+        if (graphics.length < 20) {
+          console.warn("Fewer than 20 mechanic shops found in this region. Try expanding the bounding box.");
+        }
+
+        shopsLayer.addMany(graphics);
+      })
+      .catch(err => {
+        console.error("Error loading mechanic shops from Overpass:", err);
+      });
+    }
+
+    // Load data once the view is ready
+    view.when(loadMechanicShops);
+  });
+</script>
+</body>
+</html>
